@@ -1,37 +1,36 @@
-name: Maven Test
+name: Sanity Dev Thrive Local Workflow
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
+ pull_request:
+ push:
+   branches:
+     - main
+  # schedule:
+  #   - cron: '0 1 * * *'
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up JDK 23
+      - name: Set up Java
         uses: actions/setup-java@v2
         with:
-          java-version: '23'
           distribution: 'adopt'
+          java-version: '23'
 
-      - name: Cache Maven packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+      - name: Install Chrome
+        run: |
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome-stable_current_amd64.deb
+          sudo apt-get install -f
 
-      - name: Install dependencies
-        run: mvn install -DskipTests
+      - name: Set up Maven
+        run: sudo apt-get install -y maven
 
-      - name: Run tests
-        run: mvn test -DdriverConfig=WebLocal -D"cucumber.filter.tags=@LoginPositive"
+      - name: Execute Script
+        run: |
+          mvn test -DdriverConfig=WebLocal -D"cucumber.filter.tags=@LoginPositive"
