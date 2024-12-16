@@ -11,7 +11,6 @@ public class WebLocal implements DriverConfiguration {
     @Override
     public RemoteWebDriver setUpConfiguration() {
         try {
-            System.setProperty("webdriver.chrome.driver", "src/test/drivers/chromedriver.exe");
             System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
             WebDriver driver = new ChromeDriver();
             
