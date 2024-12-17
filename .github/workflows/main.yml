@@ -34,3 +34,9 @@ jobs:
       - name: Execute Script
         run: |
           mvn test -DdriverConfig=WebRemote -D"cucumber.filter.tags=@LoginPositive"
+
+      - name: Publish Cucumber Report Annotations
+        uses: deblockt/cucumber-report-annotations-action@v1.7
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}
+          path: "**/cucumber-report.json"
