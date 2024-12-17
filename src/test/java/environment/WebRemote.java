@@ -4,6 +4,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -20,7 +21,7 @@ public class WebRemote implements DriverConfiguration {
         options.addArguments("--headless");
         options.addArguments("--window-size=1920,1080");
 
-        System.setProperty("webdriver.chrome.driver", app.getAbsolutePath());
+        WebDriverManager.chromedriver().setup();
         RemoteWebDriver driver = new ChromeDriver(options);
         if (System.getProperty("setBrowser").equals("WebBrowser")) {
             driver.manage().window().maximize();

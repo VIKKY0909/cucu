@@ -4,6 +4,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import java.time.Duration;
 
 public class WebLocal implements DriverConfiguration {
@@ -11,10 +12,9 @@ public class WebLocal implements DriverConfiguration {
     @Override
     public RemoteWebDriver setUpConfiguration() {
         try {
-            System.setProperty("webdriver.chrome.driver", "src/test/drivers/chromedriver");
+            WebDriverManager.chromedriver().setup(); // Setup WebDriverManager
             WebDriver driver = new ChromeDriver();
             
-            // Get the browser type from system properties, default to "WebBrowser" if not set
             String browserType = System.getProperty("setBrowser", "WebBrowser");
             
             if (browserType.equals("WebBrowser")) {
