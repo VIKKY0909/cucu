@@ -23,12 +23,16 @@ public class WebRemote implements DriverConfiguration {
 
         WebDriverManager.chromedriver().setup();
         RemoteWebDriver driver = new ChromeDriver(options);
-        if (System.getProperty("setBrowser").equals("WebBrowser")) {
+
+        String browserType = System.getProperty("setBrowser", "WebBrowser");
+
+        if (browserType.equals("WebBrowser")) {
             driver.manage().window().maximize();
-        } else if (System.getProperty("setBrowser").equals("Mobile")) {
+        } else if (browserType.equals("Mobile")) {
             Dimension dimension = new Dimension(414, 896);
             driver.manage().window().setSize(dimension);
         }
+
         driver.get(DriverConfiguration.selectEnvironment(System.getProperty("setEnvironment")));
         driver.manage().deleteAllCookies();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
