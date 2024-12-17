@@ -33,4 +33,4 @@ jobs:
 
       - name: Execute Script
         run: |
-          mvn test -DdriverConfig=WebLocal -D"cucumber.filter.tags=@LoginPositive"
+          mvn test -DdriverConfig=WebRemote -D"cucumber.filter.tags=@LoginPositive"
